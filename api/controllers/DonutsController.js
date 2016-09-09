@@ -9,6 +9,7 @@ var Client = require('node-rest-client').Client;
 var client = new Client();
 var endpoint = "http://localhost:1337/donuts"
 
+
 module.exports = {
 
   /**
@@ -16,27 +17,50 @@ module.exports = {
    */
   create: function (req, res) {
         
-        if(req.method != "POST"){
-          return res.view('create');
+    if(req.method != "POST"){
+      return res.view('create');
+    }
+
+    var args = {
+        data: req.body,
+        headers: { "Content-Type": "application/json" }
+    };
+     
+    client.post(endpoint, args, function (data, response) {
+        // return res.view('create', {success: { message: "Record added successfully"}});
+        if(response.statusCode != "201"){
+            return res.view('create', {error:{message: response.statusMessage + ": " + data.reason}});
         }
+        
+        return res.view('create', {success:{message: "Record created successfully"}});
 
-        var args = {
-            data: req.body,
-            headers: { "Content-Type": "application/json" }
-        };
-         
-        client.post(endpoint, args, function (data, response) {
-            // return res.view('create', {success: { message: "Record added successfully"}});
-            if(response.statusCode != "201"){
-                return res.view('create', {error:{message: response.statusMessage + ": " + data.reason}});
-            }
-
-            return res.view('create', {success:{message: "Record created successfully"}});
-
-        })
+    })
  
   },
 
+  /**
+   * `DonutsController.update()`
+   */
+  update: function (req, res) {
+    
+    if(req.method != "POST"){
+      return res.view('update');
+    }
+
+    var args = {
+        data: req.body,
+        headers: { "Content-Type": "application/json" }
+    };
+    var donutsID = req.allParams();
+    var endpointUP = endpoint + "/" + donutsID.id;
+    client.put(endpointUP, args, function (data, response) {
+        if(response.statusCode != "200"){
+            return res.view('update', {error:{message: response.statusMessage + ": " + data.reason}});
+        }
+      
+        return res.view('update', {success:{message: "Record updated successfully"}});
+    })
+  },
 
   /**
    * `DonutsController.read()`
@@ -53,22 +77,26 @@ module.exports = {
 
 
   /**
-   * `DonutsController.update()`
-   */
-  update: function (req, res) {
-    return res.json({
-      todo: 'update() is not implemented yet!'
-    });
-  },
-
-
-  /**
    * `DonutsController.delete()`
    */
   delete: function (req, res) {
-    return res.json({
-      todo: 'delete() is not implemented yet!'
-    });
+    if(req.method != "POST"){
+      return res.view('delete');
+    }
+
+    var args = {
+        data: req.body,
+        headers: { "Content-Type": "application/json" }
+    };
+    var donutsID = req.allParams();
+    var endpointDEL = endpoint + "/" + donutsID.id;
+    client.delete(endpointDEL, args, function (data, response) {
+        if(response.statusCode != "200"){
+            return res.view('delete', {error:{message: response.statusMessage + ": " + data.reason}});
+        }
+      
+        return res.view('delete', {success:{message: "Record deleted successfully"}});
+    })
   }
 };
 
