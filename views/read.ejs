@@ -6,34 +6,28 @@
 
 <%- partial ('partials/statusmessage.ejs') %>
 
-<h2>Employees</h2>
+<h2>Donuts</h2>
 <table class="table table-striped table-bordered">
   <tr>
+    <th>Flavor</th>
+    <th>Frosting</th>
+    <th>Extras</th>
+    <th>In Stock</th>
     <th>ID</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Email</th>
-    <th>Home Phone</th>
-    <th>Cell Phone</th>
-    <th>Password</th>
-    <th>Active</th>
   </tr>
-  <% if(typeof employees != "undefined" && employees.length > 0){ %>
-    <% employees.forEach(function(employee){ %>
+  <% if(typeof donuts != "undefined" && donuts.length > 0){ %>
+    <% donuts.forEach(function(donuts){ %>
       <tr>
-        <td><%= employee.id %></td>
-        <td><%= employee.firstName %></td>
-        <td><%= employee.lastName %></td>
-        <td><%= employee.email %></td>
-        <td><%= employee.homePhone %></td>
-        <td><%= employee.cellPhone %></td>
-        <td><%= employee.password %></td>
-        <td><%= employee.active %></td>
+        <td><%= donuts.flavor %></td>
+        <td><%= donuts.frosting %></td>
+        <td><%= donuts.extras %></td>
+        <td><%= donuts.inStock %></td>
+        <td><%= donuts.id %></td>
       </tr>
     <% }) %>
   <% }else{ %>
       <tr>
-        <td colspan="8">0 records found</td>
+        <td colspan="5">0 records found</td>
       </tr>
   <% } %>
   

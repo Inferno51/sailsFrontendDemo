@@ -1,18 +1,18 @@
 /**
- * EmployeeController
+ * DonutsController
  *
- * @description :: Server-side logic for managing employees
+ * @description :: Server-side logic for managing donuts
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
 var Client = require('node-rest-client').Client;
 var client = new Client();
-var endpoint = "http://localhost:1337/employee"
+var endpoint = "http://localhost:1337/donuts"
 
 module.exports = {
 
   /**
-   * `EmployeeController.create()`
+   * `DonutsController.create()`
    */
   create: function (req, res) {
         
@@ -39,21 +39,21 @@ module.exports = {
 
 
   /**
-   * `EmployeeController.read()`
+   * `DonutsController.read()`
    */
   read: function (req, res) {
 
     client.get(endpoint, function (data, response) {
-        return res.view('read', {employees: data});
+        return res.view('read', {donuts: data});
     }).on('error', function (err) {
-        return res.view('read', {error: { message: "There was an error getting the employees"}});
+        return res.view('read', {error: { message: "There was an error getting the donuts"}});
     });
 
   },
 
 
   /**
-   * `EmployeeController.update()`
+   * `DonutsController.update()`
    */
   update: function (req, res) {
     return res.json({
@@ -63,7 +63,7 @@ module.exports = {
 
 
   /**
-   * `EmployeeController.delete()`
+   * `DonutsController.delete()`
    */
   delete: function (req, res) {
     return res.json({
